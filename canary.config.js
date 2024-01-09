@@ -17,7 +17,5 @@ module.exports = {
     //Canal de logs gerais
     logChannel: "",
     //Canald de registros importantes
-    registerChannel: "",
-    //Categoria em que Tickets de UNBAN são criados.
-    unbanTicketsCategory: ""
+    registerChannel: ""
 }
