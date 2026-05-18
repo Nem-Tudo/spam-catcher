@@ -24,6 +24,7 @@ module.exports = class GouEventReady extends GouEvent {
      */
     async run(message) {
         if (!message.guild?.id) return;
+        if(message.author.bot) return;
 
         if (!message.member) return;
         await message.member.fetch();
