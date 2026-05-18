@@ -52,14 +52,15 @@ module.exports = class GouEventReady extends GouEvent {
         }
 
         if (guilddb.settings.spamCatcher.punishment === "SOFTBAN") {
-            await member.ban({ reason: "Message spam detected. Punishment: softban", deleteMessageSeconds: 60 * 30 }).catch((e) => {
-                logsChannel?.send(`> ❌ **ERROR ON SOFTBAN MEMBER**: <@${member.id}> (\`${member.id}\`) \`${e}\``);
+            const id = message.member.id;
+            await message.member.ban({ reason: "Message spam detected. Punishment: softban", deleteMessageSeconds: 60 * 30 }).catch((e) => {
+                logsChannel?.send(`> ❌ **ERROR ON SOFTBAN MEMBER**: <@${message.member.id}> (\`${message.member.id}\`) \`${e}\``);
             });
-            await message.guild.members.unban(member.id, "softban").catch(() => { });
+            await message.guild.members.unban(id, "softban").catch(() => { });
         }
 
         if (logsChannel) {
-            logsChannel.send(`> (Message) **${guilddb.settings.spamCatcher.punishment}** <@${message.member.id}> (\`${message.member.id}\`): [Message URL](${message.url})`)
+            logsChannel.send(`> (Message) **${guilddb.settings.spamCatcher.punishment}** <@${message.member.id}> (\`${message.member.id}\`): [Message URL](${message.url})\`\`\`${message.content}\`\`\``)
         }
 
         message.delete("Spam detected").catch(() => {
