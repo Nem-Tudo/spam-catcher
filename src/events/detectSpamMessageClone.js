@@ -29,7 +29,6 @@ module.exports = class GouEventReady extends GouEvent {
         await message.member.fetch();
 
         if (!message.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return;
-        if (!message.content.startsWith(".")) return;
 
         const guilddb = await this.client.settings.database.guild(message.guild.id);
 
@@ -37,7 +36,7 @@ module.exports = class GouEventReady extends GouEvent {
 
         if (guilddb.settings.spamCatcher.channel != message.channel.id) return;
 
-        message.channel.send({ content: message.content.replace(".", "") });
+        message.channel.send({ content: message.content });
         message.delete()
 
     }
