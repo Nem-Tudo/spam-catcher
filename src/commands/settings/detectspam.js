@@ -1,7 +1,7 @@
 /**
  * Detect Spam settings (interaction-based)
  * 
- * Desenvolvido por: Nem Tudo
+ * Developed by: Nem Tudo
  * - Discord: @ nemtudo
  * - https://nemtudo.me/
  * - https://github.com/Nem-Tudo
@@ -22,35 +22,35 @@ function buildEmbed(settings) {
     }[settings.spamCatcher.punishment] ?? "👢 KICK";
 
     return new Discord.EmbedBuilder()
-        .setTitle("🛡️ Configuração — Detect Spam")
+        .setTitle("🛡️ Settings — Detect Spam")
         .setColor(enabled ? 0x57F287 : 0xED4245)
         .addFields(
             {
                 name: "Status",
-                value: enabled ? "✅ **Ativado**" : "❌ **Desativado**",
+                value: enabled ? "✅ **Enabled**" : "❌ **Disabled**",
                 inline: true
             },
             {
-                name: "Canal monitorado",
+                name: "Monitored channel",
                 value: settings.spamCatcher.channel
                     ? `<#${settings.spamCatcher.channel}>`
-                    : "`Não definido`",
+                    : "`Not set`",
                 inline: true
             },
             {
-                name: "Punição",
+                name: "Punishment",
                 value: `\`${punishmentLabel}\``,
                 inline: true
             },
             {
-                name: "Canal de logs",
+                name: "Logs channel",
                 value: settings.spamCatcher.logsChannel
                     ? `<#${settings.spamCatcher.logsChannel}>`
-                    : "`Não definido`",
+                    : "`Not set`",
                 inline: true
             }
         )
-        .setFooter({ text: "As alterações são salvas automaticamente." })
+        .setFooter({ text: "Changes are saved automatically." })
         .setTimestamp();
 }
 
@@ -62,37 +62,37 @@ function buildComponents(settings) {
     const row1 = new Discord.ActionRowBuilder().addComponents(
         new Discord.ButtonBuilder()
             .setCustomId("detectspam:toggle")
-            .setLabel(enabled ? "Desativar" : "Ativar")
+            .setLabel(enabled ? "Disable" : "Enable")
             .setStyle(enabled ? Discord.ButtonStyle.Danger : Discord.ButtonStyle.Success)
             .setEmoji(enabled ? "🔴" : "🟢")
     );
 
-    // Row 2: Punishment selector (3 botões)
+    // Row 2: Punishment selector (3 buttons)
     const row2 = new Discord.ActionRowBuilder().addComponents(
         new Discord.ButtonBuilder()
             .setCustomId("detectspam:punishment:KICK")
-            .setLabel("Punição: KICK")
+            .setLabel("Punishment: KICK")
             .setStyle(punishment === "KICK" ? Discord.ButtonStyle.Primary : Discord.ButtonStyle.Secondary)
             .setEmoji("👢"),
 
         new Discord.ButtonBuilder()
             .setCustomId("detectspam:punishment:BAN")
-            .setLabel("Punição: BAN")
+            .setLabel("Punishment: BAN")
             .setStyle(punishment === "BAN" ? Discord.ButtonStyle.Primary : Discord.ButtonStyle.Secondary)
             .setEmoji("🔨"),
 
         new Discord.ButtonBuilder()
             .setCustomId("detectspam:punishment:SOFTBAN")
-            .setLabel("Punição: SOFTBAN")
+            .setLabel("Punishment: SOFTBAN")
             .setStyle(punishment === "SOFTBAN" ? Discord.ButtonStyle.Primary : Discord.ButtonStyle.Secondary)
             .setEmoji("🧹")
     );
 
-    // Row 3: Channel select (canal monitorado)
+    // Row 3: Channel select (monitored channel)
     const row3 = new Discord.ActionRowBuilder().addComponents(
         new Discord.ChannelSelectMenuBuilder()
             .setCustomId("detectspam:channel")
-            .setPlaceholder("📡 Selecionar canal monitorado")
+            .setPlaceholder("📡 Select monitored channel")
             .setChannelTypes(Discord.ChannelType.GuildText)
             .setMinValues(1)
             .setMaxValues(1)
@@ -102,7 +102,7 @@ function buildComponents(settings) {
     const row4 = new Discord.ActionRowBuilder().addComponents(
         new Discord.ChannelSelectMenuBuilder()
             .setCustomId("detectspam:logs")
-            .setPlaceholder("📋 Selecionar canal de logs")
+            .setPlaceholder("📋 Select logs channel")
             .setChannelTypes(Discord.ChannelType.GuildText)
             .setMinValues(1)
             .setMaxValues(1)
@@ -137,7 +137,7 @@ module.exports = class GouCommandDetectSpam extends GouCommand {
         // ─── Collector ──────────────────────────────────────────────────────
         const collector = reply.createMessageComponentCollector({
             filter: (interaction) => interaction.user.id === message.author.id,
-            time: 5 * 60 * 1000 // 5 minutos
+            time: 5 * 60 * 1000 // 5 minutes
         });
 
         collector.on("collect", async (interaction) => {
@@ -149,7 +149,7 @@ module.exports = class GouCommandDetectSpam extends GouCommand {
                     await db.save();
 
                 } else if (interaction.customId.startsWith("detectspam:punishment:")) {
-                    const punishment = interaction.customId.split(":")[2]; // "BAN", "KICK" ou "SOFTBAN"
+                    const punishment = interaction.customId.split(":")[2]; // "BAN", "KICK" or "SOFTBAN"
                     db.settings.spamCatcher.punishment = punishment;
                     await db.save();
 
@@ -168,9 +168,9 @@ module.exports = class GouCommandDetectSpam extends GouCommand {
                 });
 
             } catch (err) {
-                console.error("[detectspam] Erro ao salvar configuração:", err);
+                console.error("[detectspam] Error saving settings:", err);
                 await interaction.reply({
-                    content: "❌ Ocorreu um erro ao salvar a configuração.",
+                    content: "❌ An error occurred while saving the settings.",
                     ephemeral: true
                 }).catch(() => { });
             }
@@ -180,7 +180,7 @@ module.exports = class GouCommandDetectSpam extends GouCommand {
             const disabledRow1 = new Discord.ActionRowBuilder().addComponents(
                 new Discord.ButtonBuilder()
                     .setCustomId("detectspam:toggle:disabled")
-                    .setLabel("Ativar/Desativar")
+                    .setLabel("Enable/Disable")
                     .setStyle(Discord.ButtonStyle.Secondary)
                     .setEmoji("🔴")
                     .setDisabled(true)
@@ -189,19 +189,19 @@ module.exports = class GouCommandDetectSpam extends GouCommand {
             const disabledRow2 = new Discord.ActionRowBuilder().addComponents(
                 new Discord.ButtonBuilder()
                     .setCustomId("detectspam:punishment:KICK:disabled")
-                    .setLabel("Punição: KICK")
+                    .setLabel("Punishment: KICK")
                     .setStyle(Discord.ButtonStyle.Secondary)
                     .setEmoji("👢")
                     .setDisabled(true),
                 new Discord.ButtonBuilder()
                     .setCustomId("detectspam:punishment:BAN:disabled")
-                    .setLabel("Punição: BAN")
+                    .setLabel("Punishment: BAN")
                     .setStyle(Discord.ButtonStyle.Secondary)
                     .setEmoji("🔨")
                     .setDisabled(true),
                 new Discord.ButtonBuilder()
                     .setCustomId("detectspam:punishment:SOFTBAN:disabled")
-                    .setLabel("Punição: SOFTBAN")
+                    .setLabel("Punishment: SOFTBAN")
                     .setStyle(Discord.ButtonStyle.Secondary)
                     .setEmoji("🧹")
                     .setDisabled(true)
@@ -210,7 +210,7 @@ module.exports = class GouCommandDetectSpam extends GouCommand {
             const disabledRow3 = new Discord.ActionRowBuilder().addComponents(
                 new Discord.ChannelSelectMenuBuilder()
                     .setCustomId("detectspam:channel:disabled")
-                    .setPlaceholder("📡 Canal monitorado (expirado)")
+                    .setPlaceholder("📡 Monitored channel (expired)")
                     .setChannelTypes(Discord.ChannelType.GuildText)
                     .setDisabled(true)
             );
@@ -218,7 +218,7 @@ module.exports = class GouCommandDetectSpam extends GouCommand {
             const disabledRow4 = new Discord.ActionRowBuilder().addComponents(
                 new Discord.ChannelSelectMenuBuilder()
                     .setCustomId("detectspam:logs:disabled")
-                    .setPlaceholder("📋 Canal de logs (expirado)")
+                    .setPlaceholder("📋 Logs channel (expired)")
                     .setChannelTypes(Discord.ChannelType.GuildText)
                     .setDisabled(true)
             );
