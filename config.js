@@ -9,13 +9,13 @@
 
 module.exports = {
     //Prefixo em que o bot responderá os comandos de mensagens.
-    prefix: "-",
+    prefix: "sc!",
     //Usuários com Admin, com permissão de utilizar eval.
-    admins: [],
+    admins: ["612651439701098558"],
     //Servidor principal, em que todos os canais abaixo se referem.
-    mainGuild: "",
+    mainGuild: "485738053663457280",
     //Canal de logs gerais
-    logChannel: "",
+    logChannel: "1505987015257096222",
     //Canald de registros importantes
-    registerChannel: ""
+    registerChannel: "1505987015257096222"
 }

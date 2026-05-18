@@ -18,6 +18,27 @@ module.exports = (client) => {
             unique: true
         },
 
+        settings: {
+            spamCatcher: {
+                enabled: {
+                    type: Boolean,
+                    default: false
+                },
+                channel: {
+                    type: String,
+                    default: ""
+                },
+                punishment: { //SOFTBAN,BAN,KICK
+                    type: String,
+                    default: "SOFTBAN"
+                },
+                logsChannel: {
+                    type: String,
+                    default: ""
+                }
+            }
+        },
+
         //Data que o documento foi criado
         createdAt: {
             type: Date,
