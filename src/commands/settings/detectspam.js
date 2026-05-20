@@ -119,7 +119,7 @@ module.exports = class GouCommandDetectSpam extends GouCommand {
 
         this.name = "detectspam";
         this.aliases = [];
-        this.adminsOnly = true;
+        this.adminsOnly = false;
         this.guildOnly = true;
     }
 
