@@ -121,6 +121,7 @@ module.exports = class GouCommandDetectSpam extends GouCommand {
         this.aliases = [];
         this.adminsOnly = false;
         this.guildOnly = true;
+        this.permission = Discord.PermissionFlagsBits.Administrator;
     }
 
     async run(message, args) {
