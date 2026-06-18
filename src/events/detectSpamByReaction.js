@@ -68,7 +68,9 @@ module.exports = class GouEventDetectSpamByReaction extends GouEvent {
             await member.ban({ reason: "Reaction spam detected. Punishment: softban", deleteMessageSeconds: 60 * 30 }).catch((e) => {
                 logsChannel?.send(`> ❌ **ERROR ON SOFTBAN MEMBER**: <@${member.id}> (\`${member.id}\`) \`${e}\``);
             });
-            await message.guild.members.unban(id, "softban").catch(() => { });
+            setTimeout(() => {
+                await message.guild.members.unban(id, "softban").catch(() => { });
+            }, 20 * 1000)
         }
 
         if (logsChannel) {
